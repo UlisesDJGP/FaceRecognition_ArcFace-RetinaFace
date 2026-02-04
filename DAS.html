@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Panel - ASIST IA UT</title>
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600" rel="stylesheet">
+    <link rel="stylesheet" href="dist/css/style.css">
+    <script src="https://unpkg.com/animejs@3.0.1/lib/anime.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+
+    <style>
+        /* Estilos específicos para la zona de carga (mismo tema oscuro) */
+        .upload-container {
+            background-color: #1a1a1a;
+            border: 2px dashed #333;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .upload-container:hover {
+            border-color: #00bfff;
+            box-shadow: 0 0 15px rgba(0, 191, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .upload-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 20px;
+            fill: #00bfff;
+            opacity: 0.8;
+        }
+
+        .upload-text {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .upload-hint {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        /* Ocultar el input real de archivo pero dejarlo funcional */
+        #file-input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* Botón de envío estilizado */
+        .btn-upload {
+            background-color: #00bfff;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-weight: 600;
+            margin-top: 30px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: inline-block;
+        }
+        .btn-upload:hover {
+            background-color: #008ecc;
+        }
+
+        /* Ajuste del Hero para esta página */
+        .hero-dashboard {
+            padding-top: 100px;
+            padding-bottom: 80px;
+        }
+    </style>
+</head>
+<body class="is-boxed has-animations">
+    <div class="body-wrap">
+        <header class="site-header">
+            <div class="container">
+                <div class="site-header-inner">
+                    <div class="brand header-brand">
+                        <h1 class="m-0">
+                            <a href="index.html">
+                                <img class="header-logo-image" src="dist/images/logo.svg" alt="Logo">
+                            </a>
+                        </h1>
+                    </div>
+                    <div style="margin-left: auto;">
+                        <a href="index.html" class="button button-sm">Cerrar Sesión</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero hero-dashboard">
+                <div class="container">
+                    <div class="hero-inner">
+                        <div class="hero-copy" style="text-align: center; min-width: 100%;">
+                            <h1 class="hero-title mt-0">Registro Biométrico</h1>
+                            <p class="hero-paragraph">Sube tus fotografías para completar tu perfil de asistencia. Asegúrate de tener buena iluminación.</p>
+                            
+                            <div class="upload-area is-revealing">
+                                <div class="upload-container">
+                                    <input type="file" id="file-input" multiple accept="image/*">
+                                    
+                                    <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+                                    </svg>
+                                    
+                                    <h3 class="upload-text">Arrastra tus fotos aquí</h3>
+                                    <p class="upload-hint">o haz clic para explorar tus archivos (JPG, PNG)</p>
+                                </div>
+
+                                <button class="btn-upload">Subir Archivos</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div class="container">
+                <div class="site-footer-inner">
+                    <div class="footer-copyright">&copy; 2024 ASIST IA. Panel de Estudiante.</div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="dist/js/main.min.js"></script>
+    <script>
+        // Pequeño script para animar cuando seleccionas un archivo
+        const fileInput = document.getElementById('file-input');
+        const uploadText = document.querySelector('.upload-text');
+
+        fileInput.addEventListener('change', function() {
+            if (this.files && this.files.length > 0) {
+                uploadText.textContent = `¡${this.files.length} archivo(s) seleccionado(s)!`;
+                uploadText.style.color = '#00bfff';
+            }
+        });
+    </script>
+</body>
+</html>

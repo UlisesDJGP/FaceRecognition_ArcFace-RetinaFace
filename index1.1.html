@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ASIST IA UT</title>
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600" rel="stylesheet">
+    <link rel="stylesheet" href="dist/css/style.css">
+    <script src="https://unpkg.com/animejs@3.0.1/lib/anime.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+
+    <style>
+        /* --- CONFIGURACIÓN DE BARRIDO Y ESPACIADO --- */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        #mi-seccion, 
+        #seccion-login {
+            scroll-margin-top: 60px;
+            padding-top: 20px;
+        }
+
+        .divisor-elegante {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+            margin: 40px auto;
+            width: 80%;
+        }
+
+        .contenedor-login-centrado {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        /* ANIMACIÓN DE ENTRADA SUAVE (Para asegurar que se vea el login) */
+        .aparecer-suave {
+            animation: entradaSuave 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        @keyframes entradaSuave {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- ESTILOS DEL FORMULARIO (MODIFICADO PARA ANCHO IDÉNTICO) --- */
+        .logout {
+            width: 300px;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
+            transition: transform 0.3s ease; 
+            position: absolute;
+            left: 700px;
+            top: 110px;
+        }
+        .logout:hover { transform: scale(1.05); }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            /* AQUÍ ESTÁ EL CAMBIO: Ancho fijo para ambos (Registro y Login) */
+            width: 100%;
+            max-width: 400px; 
+            padding: 25px;
+            border-radius: 20px;
+            position: relative;
+            background-color: #1a1a1a;
+            color: #fff;
+            border: 1px solid #333;
+            margin: 0 auto; 
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -1px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding-left: 30px;
+            color: #00bfff;
+        }
+
+        .title::before { width: 18px; height: 18px; }
+        .title::after { width: 18px; height: 18px; animation: pulse 1s linear infinite; }
+        .title::before, .title::after {
+            position: absolute; content: ""; height: 16px; width: 16px;
+            border-radius: 50%; left: 0px; background-color: #00bfff;
+        }
+
+        .message, .signin { font-size: 14.5px; color: rgba(255, 255, 255, 0.7); }
+        .signin { text-align: center; }
+        .signin a:hover { text-decoration: underline royalblue; }
+        .signin a { color: #00bfff; }
+
+        .flex { display: flex; width: 100%; gap: 6px; }
+
+        .form label { position: relative; }
+        .form label .input {
+            background-color: #333; color: #fff; width: 100%;
+            padding: 20px 05px 05px 10px; outline: 0;
+            border: 1px solid rgba(105, 105, 105, 0.397);
+            border-radius: 10px; font-size: medium;
+        }
+
+        .form label .input + span {
+            color: rgba(255, 255, 255, 0.5); position: absolute; left: 10px; top: 0px;
+            font-size: 0.9em; cursor: text; transition: 0.3s ease;
+        }
+
+        .form label .input:placeholder-shown + span { top: 12.5px; font-size: 0.9em; }
+        .form label .input:focus + span, .form label .input:valid + span {
+            color: #00bfff; top: 0px; font-size: 0.7em; font-weight: 600;
+        }
+
+        .submit {
+            border: none; outline: none; padding: 10px; border-radius: 10px;
+            color: #fff; font-size: 16px; transition: .3s ease;
+            background-color: #00bfff; cursor: pointer;
+        }
+        .submit:hover { background-color: #00bfff96; }
+
+        @keyframes pulse {
+            from { transform: scale(0.9); opacity: 1; }
+            to { transform: scale(1.8); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="is-boxed has-animations">
+    <div class="body-wrap">
+        <header class="site-header">
+            <div class="container">
+                <div class="site-header-inner">
+                    <div class="brand header-brand">
+                        <h1 class="m-0">
+                            <a href="#">
+                                <img class="header-logo-image" src="dist/images/logo.svg" alt="Logo">
+                            </a>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="container">
+                    <div class="hero-inner">
+                        <div class="hero-copy">
+                            <div class="titulopag">
+                                <h1 class="hero-title mt-0">Registro de Asistencia IA</h1>
+                                <img src="src/images/UT LONE.png" class="logout">
+                            </div>
+                            <p class="hero-paragraph"> Innovación para tu día a día académico En UT Nayarit, estamos modernizando la forma en que interactuamos. <br><br>Este registro facial está diseñado para agilizar la toma de asistencia y proteger tu identidad académica.</p>
+                            
+                            <div class="hero-cta">
+                                <a href="#mi-seccion" class="button button-primary">REGISTRATE</a>
+                                <a class="button" href="#seccion-login">Iniciar Sesión</a>
+                            </div>
+
+                        </div>
+                        <div class="hero-figure anime-element">
+                            <svg class="placeholder" width="528" height="396" viewBox="0 0 528 396">
+                                <rect width="528" height="396" style="fill:transparent;" />
+                            </svg>
+                            <div class="hero-figure-box hero-figure-box-01" data-rotation="45deg"></div>
+                            <div class="hero-figure-box hero-figure-box-02" data-rotation="-45deg"></div>
+                            <div class="hero-figure-box hero-figure-box-03" data-rotation="0deg"></div>
+                            <div class="hero-figure-box hero-figure-box-04" data-rotation="-135deg"></div>
+                            <div class="hero-figure-box hero-figure-box-05"></div>
+                            <div class="hero-figure-box hero-figure-box-06"></div>
+                            <div class="hero-figure-box hero-figure-box-07"></div>
+                            <div class="hero-figure-box hero-figure-box-08" data-rotation="-22deg"></div>
+                            <div class="hero-figure-box hero-figure-box-09" data-rotation="-52deg"></div>
+                            <div class="hero-figure-box hero-figure-box-10" data-rotation="-50deg"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="features section">
+                <div class="container">
+                    <div class="features-inner section-inner has-bottom-divider">
+                        <div class="features-wrap">
+                            <div class="feature text-center is-revealing">
+                                
+                                <hr class="divisor-elegante">
+                                
+                                <section id="mi-seccion">
+                                    <form class="form" onsubmit="event.preventDefault(); window.location.href='dashboard.html'">
+                                        <p class="title">Regístrate</p>
+                                        <p class="message">Obtén acceso completo a la plataforma.</p>
+                                        <div class="flex">
+                                            <label>
+                                                <input class="input" type="text" placeholder="" required>
+                                                <span>Nombre</span>
+                                            </label>
+                                            <label>
+                                                <input class="input" type="text" placeholder="" required>
+                                                <span>Matricula</span>
+                                            </label>
+                                        </div>  
+                                                
+                                        <label>
+                                            <input class="input" type="email" placeholder="" required>
+                                            <span>Correo Institucional</span>
+                                        </label> 
+                                            
+                                        <label>
+                                            <input class="input" type="password" placeholder="" required>
+                                            <span>Contraseña</span>
+                                        </label>
+                                        <label>
+                                            <input class="input" type="password" placeholder="" required>
+                                            <span>Confirmar Contraseña</span>
+                                        </label>
+                                        
+                                        <button class="submit">Registrar</button>
+                                        
+                                        <p class="signin">¿Ya tienes cuenta? <a href="#seccion-login">Iniciar Sesión</a> </p>
+                                    </form>  
+                                </section>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="seccion-login" class="pricing section">
+                <div class="container"> <div class="pricing-inner section-inner">
+                        
+                        <div class="pricing-header text-center">
+                            <h2 class="section-title mt-0">Acceso Estudiantes</h2>
+                            <p class="section-paragraph mb-0">Ingresa tus credenciales institucionales.</p>
+                        </div>
+
+                        <div class="contenedor-login-centrado aparecer-suave">
+                            
+                            <form class="form" onsubmit="event.preventDefault(); window.location.href='dashboard.html'">
+                                <p class="title">Iniciar Sesión</p>
+                                <p class="message">Bienvenido de vuelta.</p>
+                                        
+                                <label>
+                                    <input class="input" type="email" placeholder="" required>
+                                    <span>Correo Institucional</span>
+                                </label> 
+                                    
+                                <label>
+                                    <input class="input" type="password" placeholder="" required>
+                                    <span>Contraseña</span>
+                                </label>
+                                
+                                <button class="submit">Entrar</button>
+                                
+                                <p class="signin">¿No tienes cuenta? <a href="#mi-seccion">Regístrate</a> </p>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section class="cta section">
+                <div class="container">
+                    <div class="cta-inner section-inner">
+                        <h3 class="section-title mt-0">¿Tienes problemas para ingresar?</h3>
+                        <div class="cta-cta">
+                            <a class="button button-primary button-wide-mobile" href="#">Soporte Técnico</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div class="container">
+                <div class="site-footer-inner">
+                    <div class="brand footer-brand">
+                        <a href="#">
+                            <img class="header-logo-image" src="dist/images/logo.svg" alt="Logo">
+                        </a>
+                    </div>
+                    <ul class="footer-links list-reset">
+                        <li><a href="#">Contacto</a></li>
+                        <li><a href="#">Nosotros</a></li>
+                        <li><a href="#">FAQ's</a></li>
+                        <li><a href="#">Soporte</a></li>
+                    </ul>
+                    <ul class="footer-social-links list-reset">
+                        <li>
+                            <a href="#">
+                                <span class="screen-reader-text">Facebook</span>
+                                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6.023 16L6 9H3V6h3V4c0-2.7 1.672-4 4.08-4 1.153 0 2.144.086 2.433.124v2.821h-1.67c-1.31 0-1.563.623-1.563 1.536V6H13l-1 3H9.28v7H6.023z" fill="#0270D7"/>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="screen-reader-text">Twitter</span>
+                                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M16 3c-.6.3-1.2.4-1.9.5.7-.4 1.2-1 1.4-1.8-.6.4-1.3.6-2.1.8-.6-.6-1.5-1-2.4-1-1.7 0-3.2 1.5-3.2 3.3 0 .3 0 .5.1.7-2.7-.1-5.2-1.4-6.8-3.4-.3.5-.4 1-.4 1.7 0 1.1.6 2.1 1.5 2.7-.5 0-1-.2-1.5-.4C.7 7.7 1.8 9 3.3 9.3c-.3.1-.6.1-.9.1-.2 0-.4 0-.6-.1.4 1.3 1.6 2.3 3.1 2.3-1.1.9-2.5 1.4-4.1 1.4H0c1.5.9 3.2 1.5 5 1.5 6 0 9.3-5 9.3-9.3v-.4C15 4.3 15.6 3.7 16 3z" fill="#0270D7"/>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="screen-reader-text">Google</span>
+                                <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7.9 7v2.4H12c-.2 1-1.2 3-4 3-2.4 0-4.3-2-4.3-4.4 0-2.4 2-4.4 4.3-4.4 1.4 0 2.3.6 2.8 1.1l1.9-1.8C11.5 1.7 9.9 1 8 1 4.1 1 1 4.1 1 8s3.1 7 7 7c4 0 6.7-2.8 6.7-6.8 0-.5 0-.8-.1-1.2H7.9z" fill="#0270D7"/>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="footer-copyright">&copy; 2024 ASIST IA, todos los derechos reservados</div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="dist/js/main.min.js"></script>
+</body>
+</html>
