@@ -1,0 +1,9 @@
+[33m41fce58[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfacial-recognition[m[33m, [m[1;31morigin/facial-recognition[m[33m)[m HEAD@{0}: commit: proyecto actualizado, y modularizado, realiza la toma, guardado de embedding y el reconocimiento de rostros
+[33mf1deb09[m HEAD@{1}: checkout: moving from main to facial-recognition
+[33mc8c5ff6[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/Bridge-API-web-MLmodel[m[33m, [m[1;32mmain[m[33m)[m HEAD@{2}: reset: moving to c8c5ff6
+[33m3829a86[m HEAD@{3}: reset: moving to 3829a86
+[33m3829a86[m HEAD@{4}: commit: version modificada del proyecto, modularizado y funcional hasta el momento, los requisitos van agregados en el texto requerimentes, de necesitarlos instalarlos en un venv
+[33mc8c5ff6[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/Bridge-API-web-MLmodel[m[33m, [m[1;32mmain[m[33m)[m HEAD@{5}: checkout: moving from facial-recognition to main
+[33mf1deb09[m HEAD@{6}: commit: version incompleta del modelo, solo testing, presenta fallas en rendimiento
+[33mc8c5ff6[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/Bridge-API-web-MLmodel[m[33m, [m[1;32mmain[m[33m)[m HEAD@{7}: checkout: moving from main to facial-recognition
+[33mc8c5ff6[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/Bridge-API-web-MLmodel[m[33m, [m[1;32mmain[m[33m)[m HEAD@{8}: clone: from https://github.com/HilkirySG/FaceRecognition_ArcFace-RetinaFace.git
