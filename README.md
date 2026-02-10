@@ -1,48 +1,65 @@
-# Face Recognition using ArcFace and RetinaFace
+# Face Recognition with ArcFace and RetinaFace
 
 ## Overview
-This project implements face recognition leveraging the ArcFace and RetinaFace algorithms. ArcFace is known for its accuracy and robustness in distinguishing faces, while RetinaFace serves as an efficient face detection model.
+This project combines the capabilities of the ArcFace and RetinaFace algorithms for robust face recognition. The following sections provide a detailed understanding of the algorithms, architecture, requirements, and performance metrics of the system.
 
-## Features
-- High accuracy face recognition using ArcFace.
-- Quick and efficient face detection using RetinaFace.
-- Easy to set up and use.
-
-## Architecture
-The project consists of:
-1. **Face Detection**: Implemented using RetinaFace, which extracts faces from images.
-2. **Face Recognition**: Utilizes the ArcFace algorithm to recognize and verify faces.
-3. **Integration**: Both components work together seamlessly to deliver an accurate face recognition solution.
-
-## Installation
-To install the necessary components, follow these steps:
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/HilkirySG/FaceRecognition_ArcFace-RetinaFace.git
-   ```
-2. Navigate to the project directory:
-   ```bash
-   cd FaceRecognition_ArcFace-RetinaFace
-   ```
-3. Install the required packages:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## Usage
-To use the face recognition feature, run the following command:
-```bash
-python main.py --image path/to/image.jpg
+## ASCII Art Diagrams
 ```
-Replace `path/to/image.jpg` with the path to the image you want to process.
+    +------------+    +-----------------+
+    |  Input     |    | Face Detection  |
+    |  Image     | --> | (RetinaFace)    |
+    +------------+    +-----------------+
+            |                 |
+            |                 |
+    +------------+    +-----------------+
+    |  Pre-     |    |  Feature        |
+    |  Processing|    |  Extraction     |
+    +------------+    |  (ArcFace)      |
+            |        +-----------------+
+            |                 |
+    +------------+    +-----------------+
+    | Output     |    | Recognition     |
+    |  Results   | <-- |  (Similarity    |
+    +------------+    |   Matching)     |
+                      +-----------------+
+```
 
-## Contributing
-We welcome contributions! Please follow these steps:
-1. Fork the repository.
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`).
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
-4. Push to the branch (`git push origin feature/AmazingFeature`).
-5. Open a pull request.
+## Detailed Algorithm Explanations
+- **ArcFace:** A deep learning algorithm for face recognition that learns discriminative features of faces using an additive angular margin loss.
 
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- **RetinaFace:** A dense face detector that can precisely locate and classify faces in images using a single-stage architecture. It employs the Focal Loss function to effectively address the class imbalance in datasets.
+
+## Architecture Flowcharts
+```mermaid
+flowchart TD
+    A[Start] --> B[Load Image]
+    B --> C{Is Face Detected?}
+    C -->|Yes| D[Extract Features]
+    C -->|No| E[Output Error]
+    D --> F[Match against Database]
+    F --> G[Return Result]
+    E --> H[End]
+    G --> H
+```
+
+## Requirements
+- Python 3.x
+- TensorFlow or PyTorch
+- OpenCV
+- Numpy
+- Scipy
+
+## Performance Metrics
+- **Accuracy:** The fraction of correctly predicted faces.
+- **Precision:** The ratio of true positive predictions to the total predicted positives.
+- **Recall:** The ratio of true positive predictions to the actual positives.
+- **F1 Score:** The harmonic mean of precision and recall.
+
+## Comprehensive Documentation
+This project is thoroughly documented, providing insights into implementation and usage. For detailed instructions and further explanations, please refer to the [Wiki](https://github.com/HilkirySG/FaceRecognition_ArcFace-RetinaFace/wiki).
+
+---  
+
+For contributions and discussions, please open issues or pull requests!  
+
+Happy coding!
