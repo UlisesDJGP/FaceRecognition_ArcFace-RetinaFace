@@ -6,3 +6,10 @@ venv_face/
 # Python
 __pycache__/
 *.pyc
+
+logs/
+*.log
+__pycache__/
+venv/
+venv_face/
+.insightface/
