@@ -1,0 +1,1 @@
+ /opt/cuda/lib/libcudart.so "/usr/lib/libnvidia-ml.so" -ldl /usr/lib/librt.a -lcudadevrt -lcudart_static -lrt -lpthread -ldl 

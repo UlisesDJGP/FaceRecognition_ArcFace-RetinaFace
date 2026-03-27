@@ -1,0 +1,56 @@
+# 1. VERSIÓN MÍNIMA Y POLÍTICAS MODERNAS
+# Requerimos CMake 3.18+ para tener soporte nativo y moderno de la arquitectura CUDA.
+cmake_minimum_required(VERSION 3.18 FATAL_ERROR)
+
+# 2. DEFINICIÓN DEL PROYECTO Y LENGUAJES
+# Habilitamos C++ y CUDA como lenguajes de primera clase en el proyecto.
+project(SRF_AR_Bridge LANGUAGES CXX CUDA)
+
+# 3. ESTÁNDARES DE C++ Y OPTIMIZACIÓN
+# Forzamos C++17 como estándar, necesario para interoperabilidad moderna.
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# Generar Position Independent Code (-fPIC) obligatoriamente para la librería .so
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+# 4. CONFIGURACIÓN DE ARQUITECTURA CUDA (Turing - sm_75)
+# Esto garantiza que el código de la GPU se ejecute nativamente sin recompilación JIT.
+# 75 es para arquitectura Turing (ej. Quadro T1000). 
+# 87 sería para Jetson Orin (por si luego migras el MVP a un embebido).
+set(CMAKE_CUDA_ARCHITECTURES 75)
+
+# 5. BÚSQUEDA DE DEPENDENCIAS DEL SISTEMA (Linker)
+# Buscamos el Toolkit de CUDA
+find_package(CUDAToolkit REQUIRED)
+
+# Buscamos la librería NVML (NVIDIA Management Library) para el gestor térmico.
+# En distribuciones Linux, suele estar en /usr/lib o en los paths del driver de NVIDIA.
+find_library(NVML_LIBRARY NAMES nvidia-ml nvml REQUIRED
+    PATHS
+    /usr/lib
+    /usr/lib/x86_64-linux-gnu
+    /opt/cuda/lib64
+)
+
+# 6. DEFINICIÓN DE LA LIBRERÍA COMPARTIDA (.so)
+# Creamos la librería dinámica que será consumida por Mojo.
+# Agrega aquí todos los archivos fuente en C++ y CUDA que formen parte de tu bridge.
+add_library(srf_bridge SHARED
+    Kernel-profile/srf_bridge.cpp
+    Kernel-profile/vector_map.cu
+)
+
+# 7. ENLACE DE LIBRERÍAS (Linking)
+# Conectamos nuestro .so con el runtime de CUDA y NVML.
+target_link_libraries(srf_bridge
+    PRIVATE
+    CUDA::cudart      # Provee cudaMalloc, cudaMemcpy, etc.
+    ${NVML_LIBRARY}   # Provee nvmlInit, nvmlDeviceGetTemperature, etc.
+)
+
+# 8. OPCIONES DE COMPILACIÓN PARA PRODUCCIÓN (-O3)
+# Maximizamos la velocidad de ejecución y operaciones matemáticas en la CPU.
+target_compile_options(srf_bridge PRIVATE
+    $<$<COMPILE_LANGUAGE:CXX>:-O3 -Wall -Wextra>
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 -use_fast_math>
+)
