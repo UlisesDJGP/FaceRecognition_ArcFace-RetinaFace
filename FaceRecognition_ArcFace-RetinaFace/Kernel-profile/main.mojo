@@ -26,7 +26,7 @@ struct SRF_Orchestrator:
         print(" Pasa tu mano frente a la cámara para ver cómo cambian los valores de luz reales.\n")
         
         # Bucle de 100 frames para mantener la cámara encendida
-        for frame_count in range(100):
+        for frame_count in range(300):
             var status = self.hardware_bridge.update() 
             
             if status == 0:
