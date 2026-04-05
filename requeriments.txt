@@ -1,0 +1,15 @@
+numpy>=1.23
+opencv-python>=4.8
+opencv-contrib-python>=4.8
+
+retina-face
+
+torch>=2.0
+torchvision>=0.15
+
+insightface
+onnxruntime
+
+scikit-learn
+matplotlib
+tqdm
