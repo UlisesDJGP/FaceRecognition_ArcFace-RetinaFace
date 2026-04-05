@@ -1,0 +1,4 @@
+/home/ulises/Documentos/FaceRecognition/build/CMakeFiles/srf_bridge.dir
+/home/ulises/Documentos/FaceRecognition/build/CMakeFiles/camera.dir
+/home/ulises/Documentos/FaceRecognition/build/CMakeFiles/edit_cache.dir
+/home/ulises/Documentos/FaceRecognition/build/CMakeFiles/rebuild_cache.dir
