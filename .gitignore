@@ -1,0 +1,15 @@
+# Entornos virtuales
+venv/
+venv_face/
+.env/
+
+# Python
+__pycache__/
+*.pyc
+
+logs/
+*.log
+__pycache__/
+venv/
+venv_face/
+.insightface/
