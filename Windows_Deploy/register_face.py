@@ -1,5 +1,6 @@
 import cv2
 import time
+import os
 
 from modules import load_face_model, open_camera, save_embedding
 from modules.recognizer import detect_faces_4k_double_buffer
@@ -9,11 +10,15 @@ SAMPLES = 20
 MIN_DET_SCORE = 0.75
 CAPTURE_DELAY = 0.5  # segundos entre capturas
 
-from modules.kernel_ffi import init_srf_engine
-
 CAMERA_URL = "http://192.168.100.11:8080/video"
 app = load_face_model()
-init_srf_engine("/home/ulises/.insightface/models/buffalo_s/w600k_mbf.onnx")
+
+# Inicializar Motor C++ ONNX Bridge (si la DLL está compilada)
+from modules.kernel_ffi import init_srf_engine, srf_lib
+if srf_lib is not None:
+    model_path = os.path.join(os.path.expanduser("~"), ".insightface", "models", "buffalo_s", "w600k_mbf.onnx")
+    init_srf_engine(model_path)
+
 cap = open_camera(camera_index=CAMERA_URL, width=1920, height=1080)
 
 count = 0

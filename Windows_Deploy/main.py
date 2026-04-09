@@ -47,10 +47,14 @@ THROTTLE_PROCESS_N_FRAMES = 15
 throttling_active = False
 
 def get_gpu_temp():
+    """Monitoreo térmico NVIDIA. nvidia-smi.exe está en PATH en Windows si los drivers están instalados."""
     try:
-        res = subprocess.check_output(["nvidia-smi", "--query-gpu=temperature.gpu", "--format=csv,noheader"])
+        res = subprocess.check_output(
+            ["nvidia-smi", "--query-gpu=temperature.gpu", "--format=csv,noheader"],
+            creationflags=subprocess.CREATE_NO_WINDOW  # Evita ventana CMD emergente en Windows
+        )
         return int(res.decode("utf-8").strip())
-    except:
+    except Exception:
         return 0
 
 # =========================
@@ -117,9 +121,14 @@ def is_same_face(bbox, tracked_faces):
 print("Inicializando modelo")
 app = load_face_model()  
 
-from modules.kernel_ffi import init_srf_engine
-print("Inyectando Inteligencia de Reconocimiento a C++ (ONNX Runtime Edge)...")
-init_srf_engine("/home/ulises/.insightface/models/buffalo_s/w600k_mbf.onnx")
+# Inicializar el Motor C++ ONNX Bridge (si la DLL está compilada)
+from modules.kernel_ffi import init_srf_engine, srf_lib
+if srf_lib is not None:
+    model_path = os.path.join(os.path.expanduser("~"), ".insightface", "models", "buffalo_s", "w600k_mbf.onnx")
+    print("Inyectando Inteligencia de Reconocimiento a C++ (ONNX Runtime Edge)...")
+    init_srf_engine(model_path)
+else:
+    print("[Info] Motor C++ no compilado. Usando InsightFace Python puro (funcional).")
 
 database = load_embeddings()
 print(f"Embeddings cargados: {list(database.keys())}")

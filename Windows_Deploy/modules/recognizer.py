@@ -63,20 +63,26 @@ def detect_faces_4k_double_buffer(app, original_frame, small_frame):
         face = Face(bbox=bbox, kps=kps, det_score=det_score)
         
         # Importar dinámicamente nuestra FFI (Edge Native C++)
-        from modules.kernel_ffi import extract_embedding_srf
+        from modules.kernel_ffi import extract_embedding_srf, srf_lib
         from insightface.utils import face_align
         
-        # En lugar de usar PyTorch/ONNX de InsightFace en la GPU y saturar el VRAM:
-        # Extraemos el "Normalized Crop" 112x112 alineando los ojos y nariz a 2D crudo (Matriz Numpy pura).
         if kps is not None:
             aligned_crop = face_align.norm_crop(original_frame, landmark=face.kps, image_size=112)
             
-            # Lanzar el parche al motor de C++ y recuperar directamente los 512 TFLOPS de ArcFace
-            try:
-                embedding_512 = extract_embedding_srf(aligned_crop)
-                face.embedding = embedding_512
-            except Exception as e:
-                print(f"[FFI Error] C++ falló la decodificación ONNX: {e}")
+            if srf_lib is not None:
+                # PATH RÁPIDO: Motor C++ ONNX nativo
+                try:
+                    embedding_512 = extract_embedding_srf(aligned_crop)
+                    face.embedding = embedding_512
+                except Exception as e:
+                    print(f"[FFI Error] C++ falló la decodificación ONNX: {e}")
+                    # Fallback a InsightFace Python puro
+                    if 'recognition' in app.models:
+                        app.models['recognition'].get(original_frame, face)
+            else:
+                # PATH SEGURO: InsightFace Python puro (si la DLL/SO no se compiló)
+                if 'recognition' in app.models:
+                    app.models['recognition'].get(original_frame, face)
                 
         faces.append(face)
         
