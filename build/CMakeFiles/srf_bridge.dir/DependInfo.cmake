@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/ulises/Documentos/FaceRecognition/FaceRecognition_ArcFace-RetinaFace/CUDA/srf_bridge.cu" "CMakeFiles/srf_bridge.dir/FaceRecognition_ArcFace-RetinaFace/CUDA/srf_bridge.cu.o" "gcc" "CMakeFiles/srf_bridge.dir/FaceRecognition_ArcFace-RetinaFace/CUDA/srf_bridge.cu.o.d"
+  "" "libsrf_bridge.so" "gcc" "CMakeFiles/srf_bridge.dir/link.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

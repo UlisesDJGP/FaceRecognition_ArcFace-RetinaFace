@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/srf_bridge.dir/link.d"
   "CMakeFiles/srf_bridge.dir/FaceRecognition_ArcFace-RetinaFace/CUDA/srf_bridge.cu.o"
   "CMakeFiles/srf_bridge.dir/FaceRecognition_ArcFace-RetinaFace/CUDA/srf_bridge.cu.o.d"
   "libsrf_bridge.pdb"

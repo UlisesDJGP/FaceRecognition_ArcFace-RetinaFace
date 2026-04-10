@@ -1,0 +1,3 @@
+/home/ulises/Documentos/FaceRecognition/build/_deps/onnxruntime_headers-subbuild/CMakeFiles/onnxruntime_headers-populate.dir
+/home/ulises/Documentos/FaceRecognition/build/_deps/onnxruntime_headers-subbuild/CMakeFiles/edit_cache.dir
+/home/ulises/Documentos/FaceRecognition/build/_deps/onnxruntime_headers-subbuild/CMakeFiles/rebuild_cache.dir

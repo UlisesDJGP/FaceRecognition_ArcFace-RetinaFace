@@ -142,6 +142,19 @@ camera/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera.dir/build.make CMakeFiles/camera.dir/build
 .PHONY : camera/fast
 
+#=============================================================================
+# Target rules for targets named srf_onnx
+
+# Build rule for target.
+srf_onnx: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 srf_onnx
+.PHONY : srf_onnx
+
+# fast build rule for target.
+srf_onnx/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/srf_onnx.dir/build.make CMakeFiles/srf_onnx.dir/build
+.PHONY : srf_onnx/fast
+
 FaceRecognition_ArcFace-RetinaFace/CUDA/camera_bridge.o: FaceRecognition_ArcFace-RetinaFace/CUDA/camera_bridge.cpp.o
 .PHONY : FaceRecognition_ArcFace-RetinaFace/CUDA/camera_bridge.o
 
@@ -190,6 +203,30 @@ FaceRecognition_ArcFace-RetinaFace/CUDA/srf_bridge.cu.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/srf_bridge.dir/build.make CMakeFiles/srf_bridge.dir/FaceRecognition_ArcFace-RetinaFace/CUDA/srf_bridge.cu.s
 .PHONY : FaceRecognition_ArcFace-RetinaFace/CUDA/srf_bridge.cu.s
 
+FaceRecognition_ArcFace-RetinaFace/CUDA/srf_onnx_bridge.o: FaceRecognition_ArcFace-RetinaFace/CUDA/srf_onnx_bridge.cpp.o
+.PHONY : FaceRecognition_ArcFace-RetinaFace/CUDA/srf_onnx_bridge.o
+
+# target to build an object file
+FaceRecognition_ArcFace-RetinaFace/CUDA/srf_onnx_bridge.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/srf_onnx.dir/build.make CMakeFiles/srf_onnx.dir/FaceRecognition_ArcFace-RetinaFace/CUDA/srf_onnx_bridge.cpp.o
+.PHONY : FaceRecognition_ArcFace-RetinaFace/CUDA/srf_onnx_bridge.cpp.o
+
+FaceRecognition_ArcFace-RetinaFace/CUDA/srf_onnx_bridge.i: FaceRecognition_ArcFace-RetinaFace/CUDA/srf_onnx_bridge.cpp.i
+.PHONY : FaceRecognition_ArcFace-RetinaFace/CUDA/srf_onnx_bridge.i
+
+# target to preprocess a source file
+FaceRecognition_ArcFace-RetinaFace/CUDA/srf_onnx_bridge.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/srf_onnx.dir/build.make CMakeFiles/srf_onnx.dir/FaceRecognition_ArcFace-RetinaFace/CUDA/srf_onnx_bridge.cpp.i
+.PHONY : FaceRecognition_ArcFace-RetinaFace/CUDA/srf_onnx_bridge.cpp.i
+
+FaceRecognition_ArcFace-RetinaFace/CUDA/srf_onnx_bridge.s: FaceRecognition_ArcFace-RetinaFace/CUDA/srf_onnx_bridge.cpp.s
+.PHONY : FaceRecognition_ArcFace-RetinaFace/CUDA/srf_onnx_bridge.s
+
+# target to generate assembly for a file
+FaceRecognition_ArcFace-RetinaFace/CUDA/srf_onnx_bridge.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/srf_onnx.dir/build.make CMakeFiles/srf_onnx.dir/FaceRecognition_ArcFace-RetinaFace/CUDA/srf_onnx_bridge.cpp.s
+.PHONY : FaceRecognition_ArcFace-RetinaFace/CUDA/srf_onnx_bridge.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -200,12 +237,16 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... camera"
 	@echo "... srf_bridge"
+	@echo "... srf_onnx"
 	@echo "... FaceRecognition_ArcFace-RetinaFace/CUDA/camera_bridge.o"
 	@echo "... FaceRecognition_ArcFace-RetinaFace/CUDA/camera_bridge.i"
 	@echo "... FaceRecognition_ArcFace-RetinaFace/CUDA/camera_bridge.s"
 	@echo "... FaceRecognition_ArcFace-RetinaFace/CUDA/srf_bridge.o"
 	@echo "... FaceRecognition_ArcFace-RetinaFace/CUDA/srf_bridge.i"
 	@echo "... FaceRecognition_ArcFace-RetinaFace/CUDA/srf_bridge.s"
+	@echo "... FaceRecognition_ArcFace-RetinaFace/CUDA/srf_onnx_bridge.o"
+	@echo "... FaceRecognition_ArcFace-RetinaFace/CUDA/srf_onnx_bridge.i"
+	@echo "... FaceRecognition_ArcFace-RetinaFace/CUDA/srf_onnx_bridge.s"
 .PHONY : help
 
 

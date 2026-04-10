@@ -30,8 +30,8 @@ CMAKE_COLOR_MAKEFILE:BOOL=ON
 //CUDA architectures
 CMAKE_CUDA_ARCHITECTURES:STRING=75
 
-//No help, variable specified on the command line.
-CMAKE_CUDA_COMPILER:UNINITIALIZED=/opt/cuda/bin/nvcc
+//CUDA compiler
+CMAKE_CUDA_COMPILER:STRING=/opt/cuda/bin/nvcc
 
 //Flags used by the CUDA compiler during all build types.
 CMAKE_CUDA_FLAGS:STRING=
@@ -49,7 +49,7 @@ CMAKE_CUDA_FLAGS_RELEASE:STRING=-O3 -DNDEBUG
 CMAKE_CUDA_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG
 
 //CXX compiler
-CMAKE_CXX_COMPILER:FILEPATH=/usr/bin/c++
+CMAKE_CXX_COMPILER:STRING=/usr/bin/c++
 
 //A wrapper around 'ar' adding the appropriate '--plugin' option
 // for the GCC compiler
@@ -450,6 +450,26 @@ CUDA_nvtx3_interop_LIBRARY:FILEPATH=/opt/cuda/lib/libnvtx3interop.so
 //Path to a library.
 CUDA_pcsamplingutil_LIBRARY:FILEPATH=/opt/cuda/lib/libpcsamplingutil.so
 
+//Directory under which to collect all populated content
+FETCHCONTENT_BASE_DIR:PATH=/home/ulises/Documentos/FaceRecognition/build/_deps
+
+//Disables all attempts to download or update content and assumes
+// source dirs already exist
+FETCHCONTENT_FULLY_DISCONNECTED:BOOL=OFF
+
+//Enables QUIET option for all content population
+FETCHCONTENT_QUIET:BOOL=ON
+
+//When not empty, overrides where to find pre-populated content
+// for onnxruntime_headers
+FETCHCONTENT_SOURCE_DIR_ONNXRUNTIME_HEADERS:PATH=
+
+//Enables UPDATE_DISCONNECTED behavior for all content population
+FETCHCONTENT_UPDATES_DISCONNECTED:BOOL=OFF
+
+//Enables UPDATE_DISCONNECTED behavior just for population of onnxruntime_headers
+FETCHCONTENT_UPDATES_DISCONNECTED_ONNXRUNTIME_HEADERS:BOOL=OFF
+
 //Path to a library.
 NVML_LIBRARY:FILEPATH=/usr/lib/libnvidia-ml.so
 
@@ -481,7 +501,7 @@ CMAKE_CACHE_MAJOR_VERSION:INTERNAL=4
 //Minor version of cmake used to create the current loaded cache
 CMAKE_CACHE_MINOR_VERSION:INTERNAL=3
 //Patch version of cmake used to create the current loaded cache
-CMAKE_CACHE_PATCH_VERSION:INTERNAL=0
+CMAKE_CACHE_PATCH_VERSION:INTERNAL=1
 //ADVANCED property for variable: CMAKE_COLOR_MAKEFILE
 CMAKE_COLOR_MAKEFILE-ADVANCED:INTERNAL=1
 //Path to CMake executable.
@@ -770,7 +790,7 @@ CUDA_nvtx3_interop_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CUDA_pcsamplingutil_LIBRARY
 CUDA_pcsamplingutil_LIBRARY-ADVANCED:INTERNAL=1
 //Details about finding CUDAToolkit
-FIND_PACKAGE_MESSAGE_DETAILS_CUDAToolkit:INTERNAL=[/opt/cuda/targets/x86_64-linux/include;/opt/cuda/targets/x86_64-linux/include/cccl][/opt/cuda/lib/libcudart.so][/opt/cuda/bin][v13.1.115()]
+FIND_PACKAGE_MESSAGE_DETAILS_CUDAToolkit:INTERNAL=[/opt/cuda/targets/x86_64-linux/include;/opt/cuda/targets/x86_64-linux/include/cccl][/opt/cuda/lib/libcudart.so][/opt/cuda/bin][v13.2.51()]
 //Details about finding OpenCV
 FIND_PACKAGE_MESSAGE_DETAILS_OpenCV:INTERNAL=[/usr][v4.13.0()]
 //Details about finding Threads

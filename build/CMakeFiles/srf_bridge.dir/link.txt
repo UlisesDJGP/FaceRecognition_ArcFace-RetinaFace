@@ -1,1 +1,1 @@
-/usr/bin/g++ -fPIC -shared -Wl,-soname,libsrf_bridge.so -o libsrf_bridge.so @CMakeFiles/srf_bridge.dir/objects1.rsp @CMakeFiles/srf_bridge.dir/linkLibs.rsp -L"/opt/cuda/targets/x86_64-linux/lib/stubs" -L"/opt/cuda/targets/x86_64-linux/lib"
+/usr/bin/g++ -fPIC -shared -Wl,--dependency-file=CMakeFiles/srf_bridge.dir/link.d -Wl,-soname,libsrf_bridge.so -o libsrf_bridge.so @CMakeFiles/srf_bridge.dir/objects1.rsp @CMakeFiles/srf_bridge.dir/linkLibs.rsp -L"/opt/cuda/targets/x86_64-linux/lib/stubs" -L"/opt/cuda/targets/x86_64-linux/lib"

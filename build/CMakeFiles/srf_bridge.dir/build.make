@@ -96,6 +96,7 @@ srf_bridge_EXTERNAL_OBJECTS =
 
 libsrf_bridge.so: CMakeFiles/srf_bridge.dir/FaceRecognition_ArcFace-RetinaFace/CUDA/srf_bridge.cu.o
 libsrf_bridge.so: CMakeFiles/srf_bridge.dir/build.make
+libsrf_bridge.so: CMakeFiles/srf_bridge.dir/compiler_depend.ts
 libsrf_bridge.so: /opt/cuda/lib/libcudart.so
 libsrf_bridge.so: /usr/lib/libnvidia-ml.so
 libsrf_bridge.so: /usr/lib/librt.a

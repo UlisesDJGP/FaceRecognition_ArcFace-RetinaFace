@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/ulises/Documentos/FaceRecognition/build/_deps/onnxruntime_headers-subbuild/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

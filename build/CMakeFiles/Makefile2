@@ -65,11 +65,13 @@ CMAKE_BINARY_DIR = /home/ulises/Documentos/FaceRecognition/build
 # The main recursive "all" target.
 all: CMakeFiles/srf_bridge.dir/all
 all: CMakeFiles/camera.dir/all
+all: CMakeFiles/srf_onnx.dir/all
 .PHONY : all
 
 # The main recursive "codegen" target.
 codegen: CMakeFiles/srf_bridge.dir/codegen
 codegen: CMakeFiles/camera.dir/codegen
+codegen: CMakeFiles/srf_onnx.dir/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
@@ -79,6 +81,7 @@ preinstall:
 # The main recursive "clean" target.
 clean: CMakeFiles/srf_bridge.dir/clean
 clean: CMakeFiles/camera.dir/clean
+clean: CMakeFiles/srf_onnx.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -144,6 +147,38 @@ CMakeFiles/camera.dir/codegen:
 CMakeFiles/camera.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera.dir/build.make CMakeFiles/camera.dir/clean
 .PHONY : CMakeFiles/camera.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/srf_onnx.dir
+
+# All Build rule for target.
+CMakeFiles/srf_onnx.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/srf_onnx.dir/build.make CMakeFiles/srf_onnx.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/srf_onnx.dir/build.make CMakeFiles/srf_onnx.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ulises/Documentos/FaceRecognition/build/CMakeFiles --progress-num=5,6 "Built target srf_onnx"
+.PHONY : CMakeFiles/srf_onnx.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/srf_onnx.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ulises/Documentos/FaceRecognition/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/srf_onnx.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ulises/Documentos/FaceRecognition/build/CMakeFiles 0
+.PHONY : CMakeFiles/srf_onnx.dir/rule
+
+# Convenience name for target.
+srf_onnx: CMakeFiles/srf_onnx.dir/rule
+.PHONY : srf_onnx
+
+# codegen rule for target.
+CMakeFiles/srf_onnx.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/srf_onnx.dir/build.make CMakeFiles/srf_onnx.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ulises/Documentos/FaceRecognition/build/CMakeFiles --progress-num=5,6 "Finished codegen for target srf_onnx"
+.PHONY : CMakeFiles/srf_onnx.dir/codegen
+
+# clean rule for target.
+CMakeFiles/srf_onnx.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/srf_onnx.dir/build.make CMakeFiles/srf_onnx.dir/clean
+.PHONY : CMakeFiles/srf_onnx.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
