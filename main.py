@@ -2,6 +2,7 @@ import cv2
 import time
 import math
 import os
+import pathlib
 import subprocess
 
 from modules import (
@@ -119,7 +120,8 @@ app = load_face_model()
 
 from modules.kernel_ffi import init_srf_engine
 print("Inyectando Inteligencia de Reconocimiento a C++ (ONNX Runtime Edge)...")
-init_srf_engine("/home/ulises/.insightface/models/buffalo_s/w600k_mbf.onnx")
+_ONNX_MODEL = pathlib.Path.home() / ".insightface" / "models" / "buffalo_s" / "w600k_mbf.onnx"
+init_srf_engine(str(_ONNX_MODEL))
 
 database = load_embeddings()
 print(f"Embeddings cargados: {list(database.keys())}")

@@ -4,14 +4,27 @@ project(SRF_AR_System LANGUAGES CXX CUDA)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-set(CMAKE_CUDA_ARCHITECTURES 75)
+# "native": nvcc detecta automáticamente la GPU instalada y compila con el sm_XX exacto.
+# (sm_75 para T1000/RTX 20xx, sm_86 para RTX 30xx, sm_89 para RTX 40xx, sm_100 para RTX 50xx)
+# Cada usuario obtiene el binario óptimo para su GPU sin editar nada.
+set(CMAKE_CUDA_ARCHITECTURES native)
 
 # =============================================================================
 # DEPENDENCIAS DEL SISTEMA
 # =============================================================================
 # 1. NVIDIA Stack
 find_package(CUDAToolkit REQUIRED)
-find_library(NVML_LIBRARY NAMES nvidia-ml nvml REQUIRED PATHS /usr/lib /usr/lib/x86_64-linux-gnu /opt/cuda/lib64)
+find_library(NVML_LIBRARY NAMES nvidia-ml nvml REQUIRED
+  PATHS
+    /usr/lib                    # Arch Linux, Garuda
+    /usr/lib64                  # Fedora, RHEL, openSUSE
+    /usr/lib/x86_64-linux-gnu   # Ubuntu, Debian
+    /opt/cuda/lib64             # CUDA instalado manualmente
+    /usr/local/cuda/lib64       # CUDA Toolkit alternativo
+)
+
+# 3. Python3 (para detectar la ruta de ONNX Runtime dinámicamente)
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
 
 # 2. Computer Vision Stack (OpenCV para V4L2)
 find_package(OpenCV REQUIRED)
@@ -46,6 +59,18 @@ add_library(srf_onnx SHARED ${CMAKE_CURRENT_SOURCE_DIR}/FaceRecognition_ArcFace-
 # Aseguramos apuntar los headers descargados (API C++ Nativa)
 target_include_directories(srf_onnx PRIVATE ${onnxruntime_headers_SOURCE_DIR}/include)
 
-# Lincamos dinámicamente con la librería binaria residente instalada por PIP
-target_link_libraries(srf_onnx PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/venv/lib/python3.14/site-packages/onnxruntime/capi/libonnxruntime.so.1.24.4)
+# Detectar dinámicamente la ruta del .so de ONNX Runtime desde el intérprete de Python activo.
+# Compatible con cualquier versión de Python (3.11, 3.12, 3.13, 3.14...) y cualquier distro.
+execute_process(
+  COMMAND ${Python3_EXECUTABLE} -c
+    "import onnxruntime, os; print(os.path.dirname(onnxruntime.__file__))"
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  OUTPUT_VARIABLE ONNXRUNTIME_DIR
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+  ERROR_QUIET
+)
+file(GLOB ONNXRUNTIME_SO_LIST "${ONNXRUNTIME_DIR}/capi/*libonnxruntime.so*")
+list(GET ONNXRUNTIME_SO_LIST 0 ONNXRUNTIME_LIB)
+message(STATUS "[SRF] ONNX Runtime detectado en: ${ONNXRUNTIME_LIB}")
+target_link_libraries(srf_onnx PRIVATE ${ONNXRUNTIME_LIB})
 target_compile_options(srf_onnx PRIVATE $<$<COMPILE_LANGUAGE:CXX>:-O3 -Wall -Wextra -fPIC>)

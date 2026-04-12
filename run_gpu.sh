@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-# Ruta base de las librerías Nvidia instaladas en el VENV
-NVIDIA_DIR="$PWD/venv/lib/python3.14/site-packages/nvidia"
+# Detectar dinámicamente la versión de Python que vive en el venv
+PY_VER=$("$PWD/venv/bin/python" -c "import sys; print(f'python{sys.version_info.major}.{sys.version_info.minor}')")
+NVIDIA_DIR="$PWD/venv/lib/$PY_VER/site-packages/nvidia"
 
 # Agregamos automáticamente todas las subcarpetas iterables de nvidia/lib al LD_LIBRARY_PATH
 for dir in "$NVIDIA_DIR"/*/lib; do

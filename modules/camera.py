@@ -1,4 +1,5 @@
 import cv2
+import platform
 import threading
 import time
 
@@ -30,32 +31,44 @@ class ThreadedCamera:
                 print(f"[Cámara] Servidor TCP Inactivo o Red Inalcanzable. Abortando IP de Red.")
                 self.capture = None
 
-        # 2. Si falló la RED, abrir la webcam local forzando el codec MJPG (RGB a Color)
-        #    ThinkPad P15 Gen1: /dev/video0 soporta MJPG (color) y YUYV (color)
-        #    /dev/video2 SOLO soporta GREY (infrarrojo) — NUNCA abrirlo
+        # 2. Si falló la RED, abrir la webcam local con el backend disponible
         if not self.capture or not self.capture.isOpened():
-            p15_rgb_node = 0
-            
-            print(f"[Cámara] Abriendo webcam local (Index: {p15_rgb_node}) forzando codec MJPG...")
-            self.capture = cv2.VideoCapture(p15_rgb_node, cv2.CAP_V4L2)
-            
+            local_cam_index = 0
+
+            # Backend condicional: V4L2 solo disponible en Linux
+            backend = cv2.CAP_V4L2 if platform.system() == "Linux" else cv2.CAP_ANY
+            backend_name = "V4L2" if backend == cv2.CAP_V4L2 else "AUTO"
+            print(f"[Cámara] Abriendo webcam local (Index: {local_cam_index}, backend: {backend_name})...")
+            self.capture = cv2.VideoCapture(local_cam_index, backend)
+
             if self.capture.isOpened():
-                # CRÍTICO: Forzar el FourCC a MJPG ANTES de pedir resolución
-                self.capture.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M','J','P','G'))
-                
-                # CAUSA RAÍZ DEL BLANCO Y NEGRO: La saturación del driver V4L2 estaba en 6/100.
-                # Restaurar a valores de fábrica para garantizar imagen a COLOR.
-                self.capture.set(cv2.CAP_PROP_SATURATION, 64)    # Fábrica: 64 (estaba en 6!)
-                self.capture.set(cv2.CAP_PROP_BRIGHTNESS, 128)   # Fábrica: 128
-                self.capture.set(cv2.CAP_PROP_CONTRAST, 32)      # Fábrica: 32
-                self.capture.set(cv2.CAP_PROP_HUE, 0)            # Fábrica: 0
-                print(f"[Cámara] Controles V4L2 restaurados: SAT=64 BRI=128 CON=32 HUE=0")
-                
-                best_cam_src = p15_rgb_node
-                print(f"[Cámara] ¡Éxito! Cámara RGB ThinkPad fijada en MJPG en el puerto: {best_cam_src}")
+                if platform.system() == "Linux":
+                    # Forzar codec MJPG para garantizar color y mayor FPS en Linux
+                    self.capture.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M','J','P','G'))
+                    # Restaurar controles V4L2 a valores de fábrica
+                    self.capture.set(cv2.CAP_PROP_SATURATION, 64)
+                    self.capture.set(cv2.CAP_PROP_BRIGHTNESS, 128)
+                    self.capture.set(cv2.CAP_PROP_CONTRAST,   32)
+                    self.capture.set(cv2.CAP_PROP_HUE,         0)
+                    print(f"[Cámara] Controles V4L2 restaurados: SAT=64 BRI=128 CON=32 HUE=0")
+
+                # Truco de la industria: pedir una resolución imposible.
+                # El driver V4L2 la corrige automáticamente al máximo real del sensor,
+                # evitando hardcodear modelos de cámara o llamadas prematuras a CAP_PROP_FRAME_WIDTH.
+                self.capture.set(cv2.CAP_PROP_FRAME_WIDTH,  10000)
+                self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 10000)
+                real_max_w = int(self.capture.get(cv2.CAP_PROP_FRAME_WIDTH))
+                real_max_h = int(self.capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
+                if real_max_w > 0 and real_max_h > 0:
+                    width  = min(width,  real_max_w)
+                    height = min(height, real_max_h)
+                    print(f"[Cámara] Sensor detectado: máximo {real_max_w}x{real_max_h} → usando {width}x{height}")
+
+                best_cam_src = local_cam_index
+                print(f"[Cámara] Webcam local activa en index: {local_cam_index}")
             else:
                 self.capture.release()
-                print(f"[Cámara] Fallo Crítico. La ThinkPad rechazó ceder el Index {p15_rgb_node}.")
+                print(f"[Cámara] Fallo Crítico: No se pudo abrir la webcam local en index {local_cam_index}.")
 
         if not self.capture or not self.capture.isOpened():
             raise RuntimeError("CRASH FINAL: No se pudo enlazar ni la Cámara IP ni la Webcam local.")
@@ -63,13 +76,7 @@ class ThreadedCamera:
         # Optimizar para flujos de red: tamaño de buffer en 1 elimina la latencia (lag) acumulada
         self.capture.set(cv2.CAP_PROP_BUFFERSIZE, 1)
         
-        # La webcam ThinkPad P15 soporta máximo 1280x720 en MJPG.
-        # Si el caller pide más (1920x1080), clampear automáticamente.
-        if not isinstance(src, str):
-            max_w, max_h = 1280, 720
-            width = min(width, max_w)
-            height = min(height, max_h)
-            print(f"[Cámara] Resolución ajustada al máximo del sensor: {width}x{height}")
+
         
         self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, width)
         self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, height)

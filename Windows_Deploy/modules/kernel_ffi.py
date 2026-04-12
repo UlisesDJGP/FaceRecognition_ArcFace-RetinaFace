@@ -2,6 +2,7 @@ import ctypes
 import numpy as np
 import os
 import sys
+import glob
 import cv2
 
 # Detectar plataforma para elegir la extensión correcta
@@ -43,7 +44,13 @@ else:
         srf_lib = ctypes.CDLL(lib_path)
     else:
         # En Linux: Precargar libonnxruntime en el espacio global de memoria
-        onnx_binary_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../venv/lib/python3.14/site-packages/onnxruntime/capi/libonnxruntime.so.1.24.4"))
+        # Detectar versión de Python activa y el .so correspondiente (symlinks incluidos)
+        _py_ver = f"python{sys.version_info.major}.{sys.version_info.minor}"
+        _base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+        _onnx_pattern = os.path.join(_base_dir, "venv", "lib", _py_ver,
+                                     "site-packages", "onnxruntime", "capi", "*libonnxruntime.so*")
+        _onnx_matches = glob.glob(_onnx_pattern)
+        onnx_binary_path = _onnx_matches[0] if _onnx_matches else ""
         
         if os.path.exists(onnx_binary_path):
             ctypes.CDLL(onnx_binary_path, mode=os.RTLD_GLOBAL)

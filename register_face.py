@@ -1,5 +1,6 @@
 import cv2
 import time
+import pathlib
 
 from modules import load_face_model, open_camera, save_embedding
 from modules.recognizer import detect_faces_4k_double_buffer
@@ -13,7 +14,8 @@ from modules.kernel_ffi import init_srf_engine
 
 CAMERA_URL = "http://192.168.100.11:8080/video"
 app = load_face_model()
-init_srf_engine("/home/ulises/.insightface/models/buffalo_s/w600k_mbf.onnx")
+_ONNX_MODEL = pathlib.Path.home() / ".insightface" / "models" / "buffalo_s" / "w600k_mbf.onnx"
+init_srf_engine(str(_ONNX_MODEL))
 cap = open_camera(camera_index=CAMERA_URL, width=1920, height=1080)
 
 count = 0

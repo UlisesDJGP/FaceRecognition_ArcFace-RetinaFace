@@ -1,15 +1,34 @@
 cmake_minimum_required(VERSION 3.18)
-project(FaceRecognition_SRF LANGUAGES CXX)
+project(FaceRecognition_SRF LANGUAGES CXX CUDA)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# "native": nvcc detecta automáticamente la GPU del sistema al compilar.
+# (sm_75 para RTX 20xx/T1000, sm_86 para RTX 30xx, sm_89 para RTX 40xx, sm_100 para RTX 50xx)
+# El usuario obtiene el binario óptimo para su GPU sin editar nada.
+set(CMAKE_CUDA_ARCHITECTURES native)
 
 # ============================================================
-# ONNX Runtime: Reutilizar los binarios del venv de Python
-# En Windows: venv\Lib\site-packages\onnxruntime\capi\
+# ONNX Runtime: Detectar dinámicamente desde el intérprete Python del venv
+# Compatible con cualquier versión de Python (3.11, 3.12, 3.13, 3.14...)
 # ============================================================
 
-# Detectar automáticamente la ruta del venv
-set(ONNX_CAPI_DIR "${CMAKE_SOURCE_DIR}/venv/Lib/site-packages/onnxruntime/capi")
+# Detectar intérprete de Python del venv
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
+
+# Obtener la ruta real del paquete onnxruntime instalado en el venv
+execute_process(
+  COMMAND ${Python3_EXECUTABLE} -c
+    "import onnxruntime, os; print(os.path.dirname(onnxruntime.__file__))"
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_VARIABLE ONNXRUNTIME_PKG_DIR
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+  ERROR_QUIET
+)
+
+set(ONNX_CAPI_DIR "${ONNXRUNTIME_PKG_DIR}/capi")
+message(STATUS "[SRF] ONNX Runtime detectado en: ${ONNX_CAPI_DIR}")
 
 if(NOT EXISTS "${ONNX_CAPI_DIR}")
     message(FATAL_ERROR "No se encontró ONNX Runtime en ${ONNX_CAPI_DIR}. Asegúrate de tener el venv con onnxruntime instalado.")
