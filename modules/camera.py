@@ -34,6 +34,26 @@ class ThreadedCamera:
         # 2. Si falló la RED, abrir la webcam local con el backend disponible
         if not self.capture or not self.capture.isOpened():
             local_cam_index = 0
+            if isinstance(src, int):
+                local_cam_index = src
+            elif platform.system() == "Linux":
+                import glob
+                import os
+                # Buscar cámaras y preferir la de Sony (Thunderbolt) o cualquier cámara no integrada
+                for path in sorted(glob.glob('/sys/class/video4linux/video*')):
+                    name_file = os.path.join(path, 'name')
+                    if os.path.exists(name_file):
+                        try:
+                            with open(name_file, 'r', encoding='utf-8', errors='ignore') as f:
+                                cam_name = f.read().strip()
+                                if "ILME" in cam_name or "Sony" in cam_name:
+                                    idx_str = os.path.basename(path).replace('video', '')
+                                    if idx_str.isdigit():
+                                        local_cam_index = int(idx_str)
+                                        print(f"[Cámara] Cámara Thunderbolt detectada: {cam_name} (Index: {local_cam_index})")
+                                        break
+                        except Exception:
+                            pass
 
             # Backend condicional: V4L2 solo disponible en Linux
             backend = cv2.CAP_V4L2 if platform.system() == "Linux" else cv2.CAP_ANY

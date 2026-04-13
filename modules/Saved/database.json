@@ -1,1 +1,51 @@
-{}
+{
+    "tic-320089": {
+        "nombre": "ulises",
+        "email": "correoinstitucional@gmail.com",
+        "password_hash": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+        "embedding_file": "/home/ulises/Documentos/FaceRecognition/modules/Saved/tic-320089.npy",
+        "image_file": "/home/ulises/Documentos/FaceRecognition/modules/Saved/tic-320089_face.jpg",
+        "embedding_dim": 512,
+        "registered_at": "2026-04-12T22:53:41.390517"
+    },
+    "gcs-11111": {
+        "nombre": "juan",
+        "email": "correoinstitucional2@gmail.com",
+        "password_hash": "94edf28c6d6da38fd35d7ad53e485307f89fbeaf120485c8d17a43f323deee71",
+        "embedding_file": "/home/ulises/Documentos/FaceRecognition/modules/Saved/gcs-11111.npy",
+        "embedding_dim": 512,
+        "registered_at": "2026-04-12T23:10:12.687943"
+    },
+    "tic-321089": {
+        "nombre": "ulises2",
+        "email": "correoinstitucional3@gmail.com",
+        "password_hash": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+        "embedding_file": "/home/ulises/Documentos/FaceRecognition/modules/Saved/tic-321089.npy",
+        "embedding_dim": 14,
+        "registered_at": "2026-04-12T23:45:45.972590"
+    },
+    "tic-00001": {
+        "nombre": "2",
+        "email": "2@gmail.com",
+        "password_hash": "4cc8f4d609b717356701c57a03e737e5ac8fe885da8c7163d3de47e01849c635",
+        "embedding_file": "/home/ulises/Documentos/FaceRecognition/modules/Saved/tic-00001.npy",
+        "embedding_dim": 20,
+        "registered_at": "2026-04-13T00:06:50.594304"
+    },
+    "tic-00000": {
+        "nombre": "3",
+        "email": "hola@gmail.com",
+        "password_hash": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+        "embedding_file": "/home/ulises/Documentos/FaceRecognition/modules/Saved/tic-00000.npy",
+        "embedding_dim": 20,
+        "registered_at": "2026-04-13T08:44:56.580181"
+    },
+    "tic-0002": {
+        "nombre": "h",
+        "email": "hola@gmail.com",
+        "password_hash": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+        "embedding_file": "/home/ulises/Documentos/FaceRecognition/modules/Saved/tic-0002.npy",
+        "embedding_dim": 20,
+        "registered_at": "2026-04-13T09:19:13.252531"
+    }
+}

@@ -11,8 +11,12 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo "  SRF_AR_System — Build Script"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
+# Detectar el directorio real en el que se encuentra este script
+PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+cd "$PROJECT_DIR"
+
 # --- Verificar entorno virtual --------------------------------
-if [ ! -f "$PWD/venv/bin/python" ]; then
+if [ ! -f "./venv/bin/python" ]; then
     echo ""
     echo "❌  ERROR: Entorno virtual no encontrado en ./venv/"
     echo "    Créalo primero:"
@@ -45,7 +49,7 @@ fi
 # --- Mostrar info del sistema --------------------------------
 GPU_NAME=$(nvidia-smi --query-gpu=name --format=csv,noheader 2>/dev/null || echo "No detectada (nvidia-smi no disponible)")
 GPU_ARCH=$(nvcc --version | grep "release" | awk '{print $NF}' | tr -d ',')
-PY_VER=$("$PWD/venv/bin/python" -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
+PY_VER=$("./venv/bin/python" -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
 CORES=$(nproc)
 
 echo ""

@@ -39,7 +39,7 @@ def get_current_subject():
 
 def init_attendance_file():
     if not os.path.exists(ATTENDANCE_FILE):
-        with open(ATTENDANCE_FILE, mode="w", newline="") as f:
+        with open(ATTENDANCE_FILE, mode="w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
             writer.writerow(["nombre", "fecha", "hora", "materia"])
             
@@ -48,7 +48,7 @@ def already_registered(name, subject, date):
     if not os.path.exists(ATTENDANCE_FILE):
         return False
 
-    with open(ATTENDANCE_FILE, mode="r") as f:
+    with open(ATTENDANCE_FILE, mode="r", encoding="utf-8", errors="replace") as f:
         reader = csv.reader(f)
         next(reader)
 
@@ -72,7 +72,7 @@ def register_attendance(name):
     if already_registered(name, subject, date):
         return
 
-    with open(ATTENDANCE_FILE, mode="a", newline="") as f:
+    with open(ATTENDANCE_FILE, mode="a", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow([name, date, time, subject])
 
