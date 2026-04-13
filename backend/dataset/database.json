@@ -1,0 +1,11 @@
+{
+    "TEST001": {
+        "nombre": "Estudiante Test",
+        "email": "test@utnay.edu.mx",
+        "password_hash": "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
+        "embedding_file": "/home/ulises/WebSite-FaceRegister/FaceRecognition_ArcFace-RetinaFace/backend/dataset/TEST001/TEST001_embedding.npy",
+        "image_file": "/home/ulises/WebSite-FaceRegister/FaceRecognition_ArcFace-RetinaFace/backend/dataset/TEST001/TEST001_face.jpg",
+        "embedding_dim": 512,
+        "registered_at": "2026-04-09T19:44:26.730840"
+    }
+}
